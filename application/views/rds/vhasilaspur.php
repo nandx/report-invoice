@@ -200,10 +200,10 @@
                   )->first_row()->COUNTED;
                   if ($individu > 0 and $individu == $dt->JMLPST) {
                   ?>
-                    <a class="btn btn-sm btn-primary" href="readpdfaspurjab/<?php echo $dt->ID . '/' . $dt->ID_CHILD . '/' . $dt->POLICYNO . '/' . $dt->BULAN . '/' . $dt->TAHUN . '/' . $dt->IDDIVISION . '/' . $dt->IDSUB; ?>">Invoice</a>
+                    <a class="btn btn-sm btn-primary" href="readpdfaspurjab/<?php echo $dt->ID . '/' . $dt->ID_CHILD . '/' . $dt->POLICYNO . '/' . $dt->TEMP_BULAN . '/' . $dt->TEMP_TAHUN . '/' . $dt->IDDIVISION . '/' . $dt->IDSUB; ?>">Invoice</a>
                   <?php
                   } else { ?>
-                    <a class="btn btn-sm btn-primary disabled" href="readpdfaspurjab/<?php echo $dt->ID . '/' . $dt->ID_CHILD . '/' . $dt->POLICYNO . '/' . $dt->BULAN . '/' . $dt->TAHUN . '/' . $dt->IDDIVISION . '/' . $dt->IDSUB; ?>">Invoice</a>
+                    <a class="btn btn-sm btn-primary disabled" href="readpdfaspurjab/<?php echo $dt->ID . '/' . $dt->ID_CHILD . '/' . $dt->POLICYNO . '/' . $dt->TEMP_BULAN . '/' . $dt->TEMP_TAHUN . '/' . $dt->IDDIVISION . '/' . $dt->IDSUB; ?>">Invoice</a>
                   <?php } ?>
                 </td>
               </tr>

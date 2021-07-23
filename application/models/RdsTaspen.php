@@ -72,7 +72,9 @@ class RdsTaspen extends CI_Model
 				tl.PRINTDATE,
 				tl.ID_CHILD,
 				tl.TAHUN,
+				tl.TEMP_TAHUN,
 				tl.BULAN,
+				tl.TEMP_BULAN,
 				tl.PARTNERNAME,
 				tl.NMDIVISION,
 				tl.NMSUB,
@@ -159,7 +161,9 @@ class RdsTaspen extends CI_Model
 					tl.PRINTDATE,
 					tl.ID_CHILD,
 					tl.TAHUN,
+					tl.TEMP_TAHUN,
 					tl.BULAN,
+					tl.TEMP_BULAN,
 					tl.PARTNERNAME,
 					tl.NMDIVISION,
 					tl.NMSUB,
@@ -593,7 +597,8 @@ class RdsTaspen extends CI_Model
 				AND ind.TAHUN = '$tahun'
 				AND ind.IDDIVISION = '$id_division'
 				AND ind.IDSUB = '$id_sub'
-				AND ind.ID_CHILD = '$id_child'		   
+				AND ind.ID_CHILD = '$id_child'
+				AND ind.STATUS = 1		   
 		  "
 		);
 
