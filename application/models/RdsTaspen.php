@@ -53,14 +53,16 @@ class RdsTaspen extends CI_Model
 					AND st.TAHUN = tl.TEMP_TAHUN
 					AND st.ID_CHILD = tl.ID_CHILD
 					AND st.IDDIVISION = tl.IDDIVISION
-					AND st.IDSUB = tl.IDSUB)        AS JMLPESERTA_PERDIVISI,
+					AND st.IDSUB = tl.IDSUB
+					AND st.STATUS = 1)        AS JMLPESERTA_PERDIVISI,
 				(
 					SELECT COUNT(non.TAHUN) AS COUNTED
 					FROM tl_individu_standard non
 					WHERE non.POLICYNO = tl.POLICYNO
 					AND non.BULAN = tl.TEMP_BULAN
 					AND non.TAHUN = tl.TEMP_TAHUN
-					AND non.ID_CHILD = tl.ID_CHILD) AS JMLPESERTA_PUSAT,
+					AND non.ID_CHILD = tl.ID_CHILD
+					AND non.STATUS = 1) AS JMLPESERTA_PUSAT,
 				tl.ID,
 				tl.IDDIVISION,
 				tl.IDSUB,
@@ -138,14 +140,16 @@ class RdsTaspen extends CI_Model
 						AND st.TAHUN = tl.TEMP_TAHUN
 						AND st.ID_CHILD = tl.ID_CHILD
 						AND st.IDDIVISION = tl.IDDIVISION
-						AND st.IDSUB = tl.IDSUB)        AS JMLPESERTA_PERDIVISI,
+						AND st.IDSUB = tl.IDSUB
+						AND st.STATUS = 1)        AS JMLPESERTA_PERDIVISI,
 					(
 						SELECT COUNT(non.TAHUN) AS COUNTED
 						FROM tl_individu_standard non
 						WHERE non.POLICYNO = tl.POLICYNO
 						AND non.BULAN = tl.BULAN
 						AND non.TAHUN = tl.TAHUN
-						AND non.ID_CHILD = tl.ID_CHILD) AS JMLPESERTA_PUSAT,
+						AND non.ID_CHILD = tl.ID_CHILD
+						AND non.STATUS = 1) AS JMLPESERTA_PUSAT,
 					tl.ID,
 					tl.IDDIVISION,
 					tl.IDSUB,
@@ -197,8 +201,8 @@ class RdsTaspen extends CI_Model
 			INNER JOIN tl_individu_standard INP 
 				ON INP.POLICYNO = INV.POLICYNO 
 				AND INP.ID_CHILD = INV.ID_CHILD 
-				AND INP.TAHUN=INV.TAHUN 
-				AND INP.BULAN=INV.BULAN 
+				AND INP.TAHUN=INV.TEMP_TAHUN 
+				AND INP.BULAN=INV.TEMP_BULAN 
 				AND INP.IDDIVISION = INV.IDDIVISION 
 				AND INP.IDSUB = INV.IDSUB 
 			WHERE INV.BULAN = '$cari' 
@@ -211,8 +215,8 @@ class RdsTaspen extends CI_Model
 			INNER JOIN tl_individu_standard INP 
 				ON INP.POLICYNO = INV.POLICYNO 
 				AND INP.ID_CHILD = INV.ID_CHILD 
-				AND INP.TAHUN=INV.TAHUN 
-				AND INP.BULAN=INV.BULAN 
+				AND INP.TAHUN=INV.TEMP_TAHUN 
+				AND INP.BULAN=INV.TEMP_BULAN 
 				AND INP.IDDIVISION = INV.IDDIVISION 
 				AND INP.IDSUB = INV.IDSUB 
 			WHERE INV.ID_CHILD != 27 
