@@ -183,10 +183,10 @@ class Taspen extends CI_Controller
 		$sheet->setCellValue('W1', 'Term (Month)');
 		$sheet->setCellValue('X1', 'Term (Year)');
 
-		if (!empty($id_division) && !empty($id_sub)) {
-			$data = $this->RdsTaspen->get_individu_premi_standard($id_division, $id_sub, $id_child, $policyno, $bulan, $tahun);
-		} else {
+		if (is_null($id_division) && is_null($id_sub)) {
 			$data = $this->RdsTaspen->get_individu_premi_pusat($id_child, $policyno, $bulan, $tahun);
+		} else {
+			$data = $this->RdsTaspen->get_individu_premi_standard($id_division, $id_sub, $id_child, $policyno, $bulan, $tahun);
 		}
 
 		$r = 2;
@@ -206,8 +206,8 @@ class Taspen extends CI_Controller
 				$sheet->setCellValue('H' . $r, $row->NOINVOICE);	
 				$sheet->setCellValue('I' . $r, $row->NOTAS);
 				$sheet->setCellValueExplicit('I' . $r, $row->NOTAS, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
-				$sheet->setCellValueExplicit('J' . $r, strval($row->MEMBERNO), \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
-				$sheet->setCellValueExplicit('K' . $r, strval($row->IDCARDNUMBER), \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+				$sheet->setCellValueExplicit('J' . $r, $row->NIP, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+				$sheet->setCellValueExplicit('K' . $r, $row->IDCARDNUMBER, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
 				$sheet->setCellValue('M' . $r, $row->TMT_MEMBER);
 				$sheet->setCellValue('N' . $r, $row->POLICYENDDATE);
 				$sheet->setCellValue('O' . $r, $row->GOLONGAN);
