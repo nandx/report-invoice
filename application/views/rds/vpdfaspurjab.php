@@ -174,10 +174,11 @@ function terbilang($nilai)
 																																														echo $dt->NMDIVISION;
 																																													} ?> dengan rincian sebagai berikut:
 	</p>
-	<?php foreach ($invoice as $dt) { ?>
 
 
 		<table style="border-style: none;">
+				<?php foreach ($invoice as $dt) { ?>
+
 			<tr>
 				<td>No Invoice</td>
 				<td>: <?php echo $dt->NOINVOICE;
