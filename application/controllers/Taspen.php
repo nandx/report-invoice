@@ -205,9 +205,9 @@ class Taspen extends CI_Controller
 				$sheet->setCellValue('F' . $r, $row->SAP_NO);	
 				$sheet->setCellValue('H' . $r, $row->NOINVOICE);	
 				$sheet->setCellValue('I' . $r, $row->NOTAS);
-				$sheet->setCellValue('J' . $r, $row->MEMBERNO);
-				$sheet->setCellValue('K' . $r, $row->IDCARDNUMBER);
-				$sheet->setCellValue('L' . $r, $row->NAMA_PESERTA);
+				$sheet->setCellValueExplicit('I' . $r, $row->NOTAS, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+				$sheet->setCellValueExplicit('J' . $r, strval($row->MEMBERNO), \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+				$sheet->setCellValueExplicit('K' . $r, strval($row->IDCARDNUMBER), \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
 				$sheet->setCellValue('M' . $r, $row->TMT_MEMBER);
 				$sheet->setCellValue('N' . $r, $row->POLICYENDDATE);
 				$sheet->setCellValue('O' . $r, $row->GOLONGAN);
