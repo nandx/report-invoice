@@ -46,8 +46,8 @@ class Taspen extends CI_Controller
 				$this->RdsTaspen->doupdate($id);
 			
 				echo '<script>alert ("Edit Sukses");</script>';
-		 		$this->load->view('taspen/v_formparams');
-				//redirect('http:///crud/taspen/lsparams');
+		 		//$this->load->view('taspen/v_formparams');
+				redirect(base_url('taspen/lsparams'), 'refresh');
 			   // $this->session->set_flashdata('edit', true);
 
 			//}
