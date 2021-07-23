@@ -1,0 +1,18 @@
+[20-Jun-2021 18:32:10 Europe/Vilnius] PHP Fatal error:  Uncaught ErrorException: proc_close() has been disabled for security reasons in phar:///opt/cpanel/composer/bin/composer/vendor/symfony/console/Application.php:957
+Stack trace:
+#0 [internal function]: Composer\Util\ErrorHandler::handle(2, 'proc_close() ha...', 'phar:///opt/cpa...', 957, Array)
+#1 phar:///opt/cpanel/composer/bin/composer/vendor/symfony/console/Application.php(957): proc_close(Resource id #333)
+#2 phar:///opt/cpanel/composer/bin/composer/vendor/symfony/console/Application.php(753): Symfony\Component\Console\Application->getSttyColumns()
+#3 phar:///opt/cpanel/composer/bin/composer/vendor/symfony/console/Application.php(714): Symfony\Component\Console\Application->getTerminalDimensions()
+#4 phar:///opt/cpanel/composer/bin/composer/vendor/symfony/console/Application.php(648): Symfony\Component\Console\Application->getTerminalWidth()
+#5 phar:///opt/cpanel/composer/bin/composer/vendor/symfony/console/Application.php(127): Symfony\Component\Console\Application->renderException(Object(ErrorException), in phar:///opt/cpanel/composer/bin/composer/vendor/symfony/console/Application.php on line 957
+[20-Jun-2021 18:32:34 Europe/Vilnius] PHP Fatal error:  Uncaught ErrorException: proc_get_status() has been disabled for security reasons in phar:///opt/cpanel/composer/bin/composer/vendor/symfony/process/Process.php:1279
+Stack trace:
+#0 [internal function]: Composer\Util\ErrorHandler::handle(2, 'proc_get_status...', 'phar:///opt/cpa...', 1279, Array)
+#1 phar:///opt/cpanel/composer/bin/composer/vendor/symfony/process/Process.php(1279): proc_get_status(Resource id #330)
+#2 phar:///opt/cpanel/composer/bin/composer/vendor/symfony/process/Process.php(700): Symfony\Component\Process\Process->updateStatus(false)
+#3 phar:///opt/cpanel/composer/bin/composer/vendor/symfony/process/Process.php(752): Symfony\Component\Process\Process->isRunning()
+#4 phar:///opt/cpanel/composer/bin/composer/vendor/symfony/process/Process.php(167): Symfony\Component\Process\Process->stop(0)
+#5 [internal function]: Symfony\Component\Process\Process->__destruct()
+#6 {main}
+  thrown in phar:///opt/cpanel/composer/bin/composer/vendor/symfony/process/Process.php on line 1279
