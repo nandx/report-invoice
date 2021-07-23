@@ -46,7 +46,8 @@ class Taspen extends CI_Controller
 				$this->RdsTaspen->doupdate($id);
 			
 				echo '<script>alert ("Edit Sukses");</script>';
-				redirect('https://punyadimas.com/crud/taspen/lsparams');
+		 		$this->load->view('taspen/v_formparams');
+				//redirect('http:///crud/taspen/lsparams');
 			   // $this->session->set_flashdata('edit', true);
 
 			//}
