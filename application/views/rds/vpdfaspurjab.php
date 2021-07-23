@@ -120,7 +120,7 @@ function terbilang($nilai)
 
 <body>
 
-	<div><img alt="" src="<?php echo base_url(); ?>/img/header-logo-tl.png" class="float-left" width="50%" ;></div>
+	<div><img alt="image-taspen-logo" src="http://172.16.14.58:89/crud/img/header-logo-tl.png" class="float-left" width="50%" ;></div>
 	<br />
 	<h3>INVOICE</h3>
 	<label>Jakarta, <?php echo tgl_indo(date('Y-m-d')); ?></label>
