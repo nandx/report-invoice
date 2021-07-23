@@ -34,7 +34,7 @@
             <td><?php echo $dt->params4;   ?></td>
 
 
-            <td><a class="btn btn-primary" href="<?php echo site_url('taspen/edparams/' . $dt->id); ?>">Edit</a></td>
+            <td><a class="btn btn-primary" href="<?php echo base_url('taspen/edparams/' . $dt->id); ?>">Edit</a></td>
           </tr>
         <?php } ?>
       </tbody>
