@@ -43,7 +43,121 @@ class RdsTaspen extends CI_Model
 		$cari = $this->input->GET('cari', TRUE);
 		$year = $this->input->GET('year', TRUE);
 
-		if (!empty($cari) and !empty($year)) {
+		if ($cari == "all") {
+			$data = $this->db->query("
+			SELECT (
+					SELECT COUNT(st.TAHUN) AS JMLPST
+					FROM tl_individu_standard st
+					WHERE st.POLICYNO = tl.POLICYNO
+					AND st.BULAN = tl.TEMP_BULAN
+					AND st.TAHUN = tl.TEMP_TAHUN
+					AND st.ID_CHILD = tl.ID_CHILD
+					AND st.IDDIVISION = tl.IDDIVISION
+					AND st.IDSUB = tl.IDSUB
+					AND st.STATUS = 1)        AS JMLPESERTA_PERDIVISI,
+				(
+					SELECT COUNT(non.TAHUN) AS COUNTED
+					FROM tl_individu_standard non
+					WHERE non.POLICYNO = tl.POLICYNO
+					AND non.BULAN = tl.TEMP_BULAN
+					AND non.TAHUN = tl.TEMP_TAHUN
+					AND non.ID_CHILD = tl.ID_CHILD
+					AND non.STATUS = 1) AS JMLPESERTA_PUSAT,
+				tl.ID,
+				tl.IDDIVISION,
+				tl.IDSUB,
+				tl.CREATEDATE,
+				tl.DUEDATE,
+				tl.PAYMENTDATE,
+				tl.PRINTDATE,
+				tl.ID_CHILD,
+				tl.TAHUN,
+				tl.TEMP_TAHUN,
+				tl.BULAN,
+				tl.TEMP_BULAN,
+				tl.PARTNERNAME,
+				tl.NMDIVISION,
+				tl.NMSUB,
+				tl.ALAMAT,
+				tl.KOTA,
+				tl.NOINVOICE,
+				tl.POLICYNO,
+				tl.JMLPST,
+				tl.JMLPREMI,
+				tl.TERBILANG,
+				tl.CURRENCY,
+				tl.PRODUCTCODE,
+				tl.PRODUCTNAME,
+				tl.BANKNAME,
+				tl.ACCOUNTNAME,
+				tl.ACCOUNTNUMBER,
+				tl.STATUS,
+				tl.REV
+			FROM tl_invoice_standard tl
+			WHERE tl.ID_CHILD != 27
+			AND YEAR(DUEDATE) = '$year'
+			AND tl.IDDIVISION IS NOT NULL
+			AND tl.IDSUB IS NOT NULL
+			ORDER BY tl.DUEDATE DESC
+		");
+		} elseif ($year == 'all') {
+			$data = $this->db->query("
+			SELECT (
+					SELECT COUNT(st.TAHUN) AS JMLPST
+					FROM tl_individu_standard st
+					WHERE st.POLICYNO = tl.POLICYNO
+					AND st.BULAN = tl.TEMP_BULAN
+					AND st.TAHUN = tl.TEMP_TAHUN
+					AND st.ID_CHILD = tl.ID_CHILD
+					AND st.IDDIVISION = tl.IDDIVISION
+					AND st.IDSUB = tl.IDSUB
+					AND st.STATUS = 1)        AS JMLPESERTA_PERDIVISI,
+				(
+					SELECT COUNT(non.TAHUN) AS COUNTED
+					FROM tl_individu_standard non
+					WHERE non.POLICYNO = tl.POLICYNO
+					AND non.BULAN = tl.TEMP_BULAN
+					AND non.TAHUN = tl.TEMP_TAHUN
+					AND non.ID_CHILD = tl.ID_CHILD
+					AND non.STATUS = 1) AS JMLPESERTA_PUSAT,
+				tl.ID,
+				tl.IDDIVISION,
+				tl.IDSUB,
+				tl.CREATEDATE,
+				tl.DUEDATE,
+				tl.PAYMENTDATE,
+				tl.PRINTDATE,
+				tl.ID_CHILD,
+				tl.TAHUN,
+				tl.TEMP_TAHUN,
+				tl.BULAN,
+				tl.TEMP_BULAN,
+				tl.PARTNERNAME,
+				tl.NMDIVISION,
+				tl.NMSUB,
+				tl.ALAMAT,
+				tl.KOTA,
+				tl.NOINVOICE,
+				tl.POLICYNO,
+				tl.JMLPST,
+				tl.JMLPREMI,
+				tl.TERBILANG,
+				tl.CURRENCY,
+				tl.PRODUCTCODE,
+				tl.PRODUCTNAME,
+				tl.BANKNAME,
+				tl.ACCOUNTNAME,
+				tl.ACCOUNTNUMBER,
+				tl.STATUS,
+				tl.REV
+			FROM tl_invoice_standard tl
+			WHERE tl.ID_CHILD != 27
+			AND MONTH(DUEDATE) = '$cari'
+			AND tl.IDDIVISION IS NOT NULL
+			AND tl.IDSUB IS NOT NULL
+			ORDER BY tl.DUEDATE DESC
+		");
+		} else {
 			$data = $this->db->query("
 			SELECT (
 					SELECT COUNT(st.TAHUN) AS JMLPST
@@ -101,8 +215,6 @@ class RdsTaspen extends CI_Model
 			AND tl.IDSUB IS NOT NULL
 			ORDER BY tl.DUEDATE DESC
 		");
-		} else {
-			$data = $this->db->query("SELECT * from tl_invoice_standard where ID_CHILD != 27 AND IDDIVISION IS NOT NULL AND IDSUB IS NOT NULL AND IDSUB > 0 order by DUEDATE DESC");
 		}
 		return $data->result();
 	}
@@ -131,9 +243,7 @@ class RdsTaspen extends CI_Model
 		$cari = $this->input->GET('cari', TRUE);
 		$year = $this->input->GET('year', TRUE);
 
-		if($cari == 'all')
-		{
-			$data = $this->db->query("
+		$data = $this->db->query("
 				SELECT (
 						SELECT COUNT(st.TAHUN) AS JMLPST
 						FROM tl_individu_standard st
@@ -189,7 +299,6 @@ class RdsTaspen extends CI_Model
 				AND tl.IDSUB > 0
 				ORDER BY tl.DUEDATE DESC
 			");
-		}
 
 		return $data->result();
 	}
@@ -323,7 +432,7 @@ class RdsTaspen extends CI_Model
 		$cari = $this->input->GET('cari', TRUE);
 		$year = $this->input->GET('year', TRUE);
 
-		if (!empty($cari) and !empty($year)) {
+		if ($cari == 'all') {
 			$data = $this->db->query("
 			SELECT (
 				SELECT COUNT(st.TAHUN) AS JMLPST
@@ -343,9 +452,49 @@ class RdsTaspen extends CI_Model
 				AND non.TAHUN = tl.TAHUN
 				AND non.ID_CHILD = tl.ID_CHILD
 				AND non.STATUS = 1) AS JMLPESERTA_PUSAT
-			,tl.* from tl_invoice_standard tl WHERE MONTH(DUEDATE) =  '$cari' AND YEAR(DUEDATE) ='$year' AND ID_CHILD = 27 AND NOINVOICE IS NOT NULL and KOTA IS NOT NULL order by DUEDATE  DESC");
+			,tl.* from tl_invoice_standard tl WHERE YEAR(DUEDATE) ='$year' AND ID_CHILD = 27 AND NOINVOICE IS NOT NULL and KOTA IS NOT NULL order by DUEDATE  DESC");
+		} elseif ($year == 'all') {
+			$data = $this->db->query("
+			SELECT (
+				SELECT COUNT(st.TAHUN) AS JMLPST
+				FROM tl_individu_standard st
+				WHERE st.POLICYNO = tl.POLICYNO
+				AND st.BULAN = tl.TEMP_BULAN
+				AND st.TAHUN = tl.TEMP_TAHUN
+				AND st.ID_CHILD = tl.ID_CHILD
+				AND st.IDDIVISION = tl.IDDIVISION
+				AND st.IDSUB = tl.IDSUB
+				AND st.STATUS = 1)        AS JMLPESERTA_PERDIVISI,
+			(
+				SELECT COUNT(non.TAHUN) AS COUNTED
+				FROM tl_individu_standard non
+				WHERE non.POLICYNO = tl.POLICYNO
+				AND non.BULAN = tl.BULAN
+				AND non.TAHUN = tl.TAHUN
+				AND non.ID_CHILD = tl.ID_CHILD
+				AND non.STATUS = 1) AS JMLPESERTA_PUSAT
+			,tl.* from tl_invoice_standard tl WHERE MONTH(DUEDATE) ='$cari' AND ID_CHILD = 27 AND NOINVOICE IS NOT NULL and KOTA IS NOT NULL order by DUEDATE  DESC");
 		} else {
-			$data = $this->db->query("SELECT * from tl_invoice_standard where ID_CHILD = 27 AND NOINVOICE IS NOT NULL AND CURRENCY IS NOT NULL AND PRODUCTNAME IS NOT NULL AND KOTA IS NOT NULL order by DUEDATE DESC");
+			$data = $this->db->query("
+			SELECT (
+				SELECT COUNT(st.TAHUN) AS JMLPST
+				FROM tl_individu_standard st
+				WHERE st.POLICYNO = tl.POLICYNO
+				AND st.BULAN = tl.TEMP_BULAN
+				AND st.TAHUN = tl.TEMP_TAHUN
+				AND st.ID_CHILD = tl.ID_CHILD
+				AND st.IDDIVISION = tl.IDDIVISION
+				AND st.IDSUB = tl.IDSUB
+				AND st.STATUS = 1)        AS JMLPESERTA_PERDIVISI,
+			(
+				SELECT COUNT(non.TAHUN) AS COUNTED
+				FROM tl_individu_standard non
+				WHERE non.POLICYNO = tl.POLICYNO
+				AND non.BULAN = tl.BULAN
+				AND non.TAHUN = tl.TAHUN
+				AND non.ID_CHILD = tl.ID_CHILD
+				AND non.STATUS = 1) AS JMLPESERTA_PUSAT
+			,tl.* from tl_invoice_standard tl WHERE MONTH(DUEDATE) = '$cari' AND YEAR(DUEDATE) = '$year' AND ID_CHILD = 27 AND NOINVOICE IS NOT NULL and KOTA IS NOT NULL order by DUEDATE  DESC");
 		}
 		return $data->result();
 	}
