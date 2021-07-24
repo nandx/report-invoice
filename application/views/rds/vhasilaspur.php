@@ -1,11 +1,22 @@
 <html>
 
-<head>
-  <title>ASPURJAB</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ASPURJAB</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" crossorigin="anonymous">
+  
+    <!-- Common Plugins -->
+    <link href="<?php echo base_url('assets/lib/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet">
+		
+    <!-- DataTables -->
+    <link href="<?php echo base_url('assets/lib/datatables/jquery.dataTables.min.css') ?>" rel="stylesheet" type="text/css">
+    <link href="<?php echo base_url('assets/lib/datatables/responsive.bootstrap.min.css') ?>" rel="stylesheet" type="text/css">
+	<link href="<?php echo base_url('assets/lib/datatables/buttons.dataTables.css') ?>" rel="stylesheet" type="text/css">
+		 
+    <!-- Custom Css-->
+    <link href="<?php echo base_url('assets/css/style.css') ?> " rel="stylesheet">
 
 
   <style>
@@ -29,19 +40,87 @@
       float: right !important;
     }
 
-    #example_filter input {
+     #example_filter input {
       border-radius: 5px;
       float: left;
-      margin-right: 800px;
+      margin-right: 1010px;
+      height: 30px;
+      width: 190px;
+    }
+    
+    .toggle-none
+    {
+        margin-top: -22px;
     }
   </style>
 </head>
+ <body class="horizontal">
+             <!-- ============================================================== -->
+			<!-- 						Topbar Start 							-->
+			<!-- ============================================================== -->
+			<div class="top-bar light-top-bar">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col">
+						<a class="admin-logo" href="index.html">
+							<h1>
+								<img alt="" src="<?php echo base_url('img/logo-header.png')  ?>" class="toggle-none">
+							</h1>
+						</a>				
+					
+						<ul class="list-inline top-right-nav">
+					
+							<li class="dropdown avtar-dropdown">
+								<a  data-toggle="dropdown" href="<?php echo base_url('taspen/lookup?cari=all&year=all'); ?>">
+									Non Aspurjab
+								</a>
+							</li>
+							<li class="dropdown avtar-dropdown">
+								<a  data-toggle="dropdown" href="<?php echo base_url('taspen/lookupaspurjab?cari=all&year=all'); ?>">
+									Aspurjab
+								</a>
+							</li>
+							<li class="dropdown avtar-dropdown">
+								<a  data-toggle="dropdown" href="<?php echo base_url('taspen/lsparams'); ?>">
+									Parameter
+								</a>
+							</li>
+							<li class="dropdown avtar-dropdown">
+								<lable>&nbsp;&nbsp;&nbsp;&nbsp;</lable>	
+							</li>
+							<li class="dropdown avtar-dropdown">
+								<lable>&nbsp;&nbsp;&nbsp;&nbsp;</lable>	
+							</li>
+							<li class="dropdown avtar-dropdown">
+								<lable>&nbsp;&nbsp;&nbsp;&nbsp;</lable>	
+							</li>
+								<li class="dropdown avtar-dropdown">
+								<lable>&nbsp;&nbsp;&nbsp;&nbsp;</lable>	
+							</li>
+							<li class="dropdown avtar-dropdown">
+								<lable>&nbsp;&nbsp;&nbsp;&nbsp;</lable>	
+							</li>
+							<li class="dropdown avtar-dropdown">
+								<lable>&nbsp;&nbsp;&nbsp;&nbsp;</lable>	
+							</li>
+								<li class="dropdown avtar-dropdown">
+								<lable>&nbsp;&nbsp;&nbsp;&nbsp;</lable>	
+							</li>
+							<li class="dropdown avtar-dropdown">
+								<lable>&nbsp;&nbsp;&nbsp;&nbsp;</lable>	
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- ============================================================== -->
+		<!--                        Topbar End                              -->
+		<!-- ============================================================== -->
+		   <section class="main-content" style="background-color: #E1E8EB">
 
-<body>
-  <div class="container my-4">
+<br/>
 
-    <div class="row">
-      <div class="col">
         <form action="<?php echo base_url('taspen/lookupaspurjab') ?>" action="GET">
           <label for="bulan">Jatuh Tempo</label>
 
@@ -125,11 +204,10 @@
 
 
 
-    <div class="table-responsive">
-      <table id="example" class="table table-striped table-bordered" style="font-size:12px">
+      <table id="example" class="table table-striped dt-responsive" style="font-size: 11px">
         <thead>
           <tr>
-            <th width="3%"><button onclick="document.getElementById('search_box').value = ''" type="button" name="delete_all" id="delete_all" class="btn btn-danger btn-sm">PAID</button></th>
+            <th width="3%"><button onclick="document.getElementById('search_box').value = ''" type="button" name="delete_all" id="delete_all" class="btn btn-danger btn-sm">            <th width="3%"><button onclick="document.getElementById('search_box').value = ''" type="button" name="delete_all" id="delete_all" class="btn btn-danger btn-sm"><h6 style="font-size:10px">PAID</h6></button></th>
             <th scope="col">Partner<br />Name</th>
             <th scope="col">Cabang</th>
             <th scope="col">Satker</th>
@@ -179,10 +257,10 @@
                 <td><?php echo $dt->PAYMENTDATE; ?></td>
                 <td><?php
                     if ($dt->STATUS == '1') {
-                    ?><a href="#" class="btn btn-success btn-sm disabled" role="button" aria-disabled="true">PAID</a>
+                    ?><a href="#" class="btn btn-success btn-sm disabled" role="button" aria-disabled="true"><h6 style="font-size:10px">PAID</h6></a>
                   <?php } else {
                   ?>
-                    <a href="#" class="btn btn-danger btn-sm disabled" role="button" aria-disabled="true">UNPAID</a>
+                    <a href="#" class="btn btn-danger btn-sm disabled" role="button" aria-disabled="true"><h6 style="font-size:10px">UNPAID</h6></a>
                   <?php }
                   ?>
                 </td>
@@ -200,10 +278,10 @@
                   )->first_row()->COUNTED;
                   if ($individu > 0 and $individu == $dt->JMLPST) {
                   ?>
-                    <a class="btn btn-sm btn-primary" href="readpdfaspurjab/<?php echo $dt->ID . '/' . $dt->ID_CHILD . '/' . $dt->POLICYNO . '/' . $dt->TEMP_BULAN . '/' . $dt->TEMP_TAHUN . '/' . $dt->IDDIVISION . '/' . $dt->IDSUB; ?>">Invoice</a>
+                    <a class="btn btn-sm btn-primary" href="readpdfaspurjab/<?php echo $dt->ID . '/' . $dt->ID_CHILD . '/' . $dt->POLICYNO . '/' . $dt->TEMP_BULAN . '/' . $dt->TEMP_TAHUN . '/' . $dt->IDDIVISION . '/' . $dt->IDSUB; ?>"><h6 style="font-size:10px">invoice</h6></a>
                   <?php
                   } else { ?>
-                    <a class="btn btn-sm btn-primary disabled" href="readpdfaspurjab/<?php echo $dt->ID . '/' . $dt->ID_CHILD . '/' . $dt->POLICYNO . '/' . $dt->TEMP_BULAN . '/' . $dt->TEMP_TAHUN . '/' . $dt->IDDIVISION . '/' . $dt->IDSUB; ?>">Invoice</a>
+                    <a class="btn btn-sm btn-primary disabled" href="readpdfaspurjab/<?php echo $dt->ID . '/' . $dt->ID_CHILD . '/' . $dt->POLICYNO . '/' . $dt->TEMP_BULAN . '/' . $dt->TEMP_TAHUN . '/' . $dt->IDDIVISION . '/' . $dt->IDSUB; ?>"><h6 style="font-size:10px">invoice</h6></a>
                   <?php } ?>
                 </td>
               </tr>
@@ -214,11 +292,17 @@
           }
           ?>
 
-        </tbody>
+           </tbody>
       </table>
-    </div>
+        </div>
+    </div>            
+</div>
 
-  </div>
+
+  <footer class="footer">
+                <span>Copyright &copy; 2020 Taspenlife</span>
+            </footer>
+</section>
 
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
