@@ -66,7 +66,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col">
-          <a class="admin-logo" href="index.html">
+          <a class="admin-logo" href="#">
             <h1>
               <img alt="" src="<?php echo base_url('img/logo-header.png')  ?>" class="toggle-none">
             </h1>
