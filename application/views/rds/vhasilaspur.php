@@ -285,7 +285,8 @@
                 				POLICYNO = '$dt->POLICYNO'
                 				AND BULAN = '$dt->TEMP_BULAN'
                 				AND TAHUN = '$dt->TEMP_TAHUN'
-                				AND ID_CHILD = '$dt->ID_CHILD'"
+                				AND ID_CHILD = '$dt->ID_CHILD'
+                        AND STATUS = 1"
                 )->first_row()->COUNTED;
                 if ($individu > 0 and $individu == $dt->JMLPST) { ?>
                   <a target="_blank" class="btn btn-sm btn-primary" href="readpdfaspurjab/<?php echo $dt->ID . '/' . $dt->ID_CHILD . '/' . $dt->POLICYNO . '/' . $dt->TEMP_BULAN . '/' . $dt->TEMP_TAHUN . '/' . $dt->IDDIVISION . '/' . $dt->IDSUB; ?>">
