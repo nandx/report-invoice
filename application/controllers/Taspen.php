@@ -128,8 +128,14 @@ class Taspen extends CI_Controller
 		// $data['whereloop'] = $this->RdsTaspen->querywhereasloop($id, $bulan,$tahun);
 		//$data['terbias'] = $this->RdsTaspen->terbilongaspur($id, $bulan, $tahun);
 		$data['invoice'] = $this->RdsTaspen->get_aspurjab_invoice($id, $id_child, $policyno, $bulan, $tahun);
-		$data['individu'] = $this->RdsTaspen->get_individu_premi_pusat($id_child, $policyno, $bulan, $tahun);
 		$data['listparams'] = $this->RdsTaspen->listparams();
+
+		if( is_null($id_division) and is_null($id_sub))
+		{
+			$data['individu'] = $this->RdsTaspen->get_individu_premi_pusat($id_child, $policyno, $bulan, $tahun);
+		} else {
+			$data['individu'] = $this->RdsTaspen->get_individu_premi_standard($id_division, $id_sub, $id_child, $policyno, $bulan, $tahun);
+		}
 
 		$mpdf = new \Mpdf\Mpdf();
 		$mpdf = new \Mpdf\Mpdf(['format' => 'A4']);

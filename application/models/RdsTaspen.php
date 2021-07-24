@@ -324,7 +324,26 @@ class RdsTaspen extends CI_Model
 		$year = $this->input->GET('year', TRUE);
 
 		if (!empty($cari) and !empty($year)) {
-			$data = $this->db->query("SELECT * from tl_invoice_standard WHERE MONTH(DUEDATE) =  '$cari' AND YEAR(DUEDATE) ='$year' AND ID_CHILD = 27 AND NOINVOICE IS NOT NULL and KOTA IS NOT NULL order by DUEDATE  DESC");
+			$data = $this->db->query("
+			SELECT (
+				SELECT COUNT(st.TAHUN) AS JMLPST
+				FROM tl_individu_standard st
+				WHERE st.POLICYNO = tl.POLICYNO
+				AND st.BULAN = tl.TEMP_BULAN
+				AND st.TAHUN = tl.TEMP_TAHUN
+				AND st.ID_CHILD = tl.ID_CHILD
+				AND st.IDDIVISION = tl.IDDIVISION
+				AND st.IDSUB = tl.IDSUB
+				AND st.STATUS = 1)        AS JMLPESERTA_PERDIVISI,
+			(
+				SELECT COUNT(non.TAHUN) AS COUNTED
+				FROM tl_individu_standard non
+				WHERE non.POLICYNO = tl.POLICYNO
+				AND non.BULAN = tl.BULAN
+				AND non.TAHUN = tl.TAHUN
+				AND non.ID_CHILD = tl.ID_CHILD
+				AND non.STATUS = 1) AS JMLPESERTA_PUSAT
+			,tl.* from tl_invoice_standard tl WHERE MONTH(DUEDATE) =  '$cari' AND YEAR(DUEDATE) ='$year' AND ID_CHILD = 27 AND NOINVOICE IS NOT NULL and KOTA IS NOT NULL order by DUEDATE  DESC");
 		} else {
 			$data = $this->db->query("SELECT * from tl_invoice_standard where ID_CHILD = 27 AND NOINVOICE IS NOT NULL AND CURRENCY IS NOT NULL AND PRODUCTNAME IS NOT NULL AND KOTA IS NOT NULL order by DUEDATE DESC");
 		}
@@ -339,7 +358,27 @@ class RdsTaspen extends CI_Model
 
 		if ($cari == 'all') {
 
-			$data = $this->db->query("SELECT * from tl_invoice_standard where  ID_CHILD = 27 AND NOINVOICE IS NOT NULL AND CURRENCY IS NOT NULL AND PRODUCTNAME IS NOT NULL AND KOTA IS NOT NULL order by DUEDATE DESC");
+			$data = $this->db->query("
+			SELECT
+			(
+				SELECT COUNT(st.TAHUN) AS JMLPST
+				FROM tl_individu_standard st
+				WHERE st.POLICYNO = tl.POLICYNO
+				AND st.BULAN = tl.TEMP_BULAN
+				AND st.TAHUN = tl.TEMP_TAHUN
+				AND st.ID_CHILD = tl.ID_CHILD
+				AND st.IDDIVISION = tl.IDDIVISION
+				AND st.IDSUB = tl.IDSUB
+				AND st.STATUS = 1)        AS JMLPESERTA_PERDIVISI,
+			(
+				SELECT COUNT(non.TAHUN) AS COUNTED
+				FROM tl_individu_standard non
+				WHERE non.POLICYNO = tl.POLICYNO
+				AND non.BULAN = tl.BULAN
+				AND non.TAHUN = tl.TAHUN
+				AND non.ID_CHILD = tl.ID_CHILD
+				AND non.STATUS = 1) AS JMLPESERTA_PUSAT,
+			* from tl_invoice_standard where  ID_CHILD = 27 AND NOINVOICE IS NOT NULL AND CURRENCY IS NOT NULL AND PRODUCTNAME IS NOT NULL AND KOTA IS NOT NULL order by DUEDATE DESC");
 		}
 		return $data->result();
 
@@ -352,7 +391,27 @@ class RdsTaspen extends CI_Model
 
 	public function allmlookupaspur()
 	{
-		$data = $this->db->query("SELECT * FROM tl_invoice_standard where ID_CHILD = 27 AND CURRENCY IS NOT NULL AND PRODUCTNAME IS NOT NULL AND KOTA IS NOT NULL order by DUEDATE DESC");
+		$data = $this->db->query("
+		SELECT
+		(
+			SELECT COUNT(st.TAHUN) AS JMLPST
+			FROM tl_individu_standard st
+			WHERE st.POLICYNO = tl.POLICYNO
+			AND st.BULAN = tl.TEMP_BULAN
+			AND st.TAHUN = tl.TEMP_TAHUN
+			AND st.ID_CHILD = tl.ID_CHILD
+			AND st.IDDIVISION = tl.IDDIVISION
+			AND st.IDSUB = tl.IDSUB
+			AND st.STATUS = 1)        AS JMLPESERTA_PERDIVISI,
+		(
+			SELECT COUNT(non.TAHUN) AS COUNTED
+			FROM tl_individu_standard non
+			WHERE non.POLICYNO = tl.POLICYNO
+			AND non.BULAN = tl.BULAN
+			AND non.TAHUN = tl.TAHUN
+			AND non.ID_CHILD = tl.ID_CHILD
+			AND non.STATUS = 1) AS JMLPESERTA_PUSAT,
+			 * FROM tl_invoice_standard where ID_CHILD = 27 AND CURRENCY IS NOT NULL AND PRODUCTNAME IS NOT NULL AND KOTA IS NOT NULL order by DUEDATE DESC");
 		return $data->result();
 	}
 	public function mdatakotoraspurjab()
@@ -412,7 +471,7 @@ class RdsTaspen extends CI_Model
 				AND ID_CHILD = '$id_child'
 				AND IDDIVISION = '$id_division'
 				AND IDSUB = '$id_sub'
-				AND STATUS = 1)
+				AND STATUS = 1) INV
 			");
 		} else {
 			$data = $this->db->query("SELECT sum(INV.PREMI) as jml
@@ -559,7 +618,7 @@ class RdsTaspen extends CI_Model
 
 		$data = $this->db->query(
 			"
-			SELECT ind.TAHUN,
+			SELECT DISTINCT ind.TAHUN,
 					ind.BULAN,
 					inv.PRODUCTNAME,
 					inv.NMDIVISION,
@@ -655,7 +714,7 @@ class RdsTaspen extends CI_Model
 	{
 		$data = $this->db->query(
 			"
-			SELECT ind.TAHUN,
+			SELECT DISTINCT ind.TAHUN,
 					ind.BULAN,
 					inv.PRODUCTNAME,
 					inv.NMDIVISION,
