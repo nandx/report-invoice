@@ -130,7 +130,7 @@ class Taspen extends CI_Controller
 		$data['invoice'] = $this->RdsTaspen->get_aspurjab_invoice($id, $id_child, $policyno, $bulan, $tahun);
 		$data['listparams'] = $this->RdsTaspen->listparams();
 
-		if( is_null($id_division) and is_null($id_sub))
+		if( is_null($id_division) or is_null($id_sub))
 		{
 			$data['individu'] = $this->RdsTaspen->get_individu_premi_pusat($id_child, $policyno, $bulan, $tahun);
 		} else {
