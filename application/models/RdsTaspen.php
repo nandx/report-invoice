@@ -411,7 +411,8 @@ class RdsTaspen extends CI_Model
 				AND TAHUN = '$tahun'
 				AND ID_CHILD = '$id_child'
 				AND IDDIVISION = '$id_division'
-				AND IDSUB = '$id_sub')
+				AND IDSUB = '$id_sub'
+				AND STATUS = 1)
 			");
 		} else {
 			$data = $this->db->query("SELECT sum(INV.PREMI) as jml
@@ -420,7 +421,8 @@ class RdsTaspen extends CI_Model
 				POLICYNO = '$policyno'
 				AND BULAN = '$bulan'
 				AND TAHUN = '$tahun'
-				AND ID_CHILD = '$id_child') INV
+				AND ID_CHILD = '$id_child'
+				AND STATUS = 1) INV
 			");
 		}
 
@@ -696,6 +698,7 @@ class RdsTaspen extends CI_Model
 				AND ind.BULAN = '$bulan'
 				AND ind.TAHUN = '$tahun'
 				AND ind.ID_CHILD = '$id_child'
+				AND ind.STATUS = 1
 				"
 		);
 
