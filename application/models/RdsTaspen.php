@@ -399,7 +399,7 @@ class RdsTaspen extends CI_Model
 		return $data->result();
 	}
 
-	public function sumpremias($id_child, $id_division, $id_sub, $policyno, $bulan, $tahun)
+	public function sumpremias($id, $id_child, $id_division, $id_sub, $policyno, $bulan, $tahun)
 	{
 
 		if (!is_null($id_division) && !is_null($id_sub)) {
