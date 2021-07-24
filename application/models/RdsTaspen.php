@@ -387,22 +387,22 @@ class RdsTaspen extends CI_Model
 	}
 
 	//	public function get_aspurjab_invoice($id, $bulan, $tahun)
-	public function get_aspurjab_invoice($id, $id_child, $policyno, $bulan, $tahun)
+	public function get_aspurjab_invoice($id)
 	{
 		$data = $this->db->query("SELECT *,
 				CASE 
-					WHEN (LEN(MONTH(DUEDATE)) < 2)
- 					THEN CONCAT(0,MONTH(DUEDATE))
- 					ELSE MONTH(DUEDATE)
+					WHEN (LEN(BULAN) < 2)
+ 					THEN CONCAT(0,BULAN)
+ 					ELSE BULAN
 				END AS DUEDATEMONTH 
- 				FROM tl_invoice_standard where  BULAN='$bulan' and TAHUN='$tahun' AND id = '$id' and POLICYNO = '$policyno' order by DUEDATE DESC");
+ 				FROM tl_invoice_standard where id = '$id' order by DUEDATE DESC");
 		return $data->result();
 	}
 
-	public function sumpremias($id, $id_child, $id_division, $id_sub, $policyno, $bulan, $tahun)
+	public function sumpremias($id_child, $id_division, $id_sub, $policyno, $bulan, $tahun)
 	{
 
-		if (!empty($id_division) && !empty($id_sub)) {
+		if (!is_null($id_division) && !is_null($id_sub)) {
 			$data = $this->db->query("SELECT sum(INV.PREMI) as jml 
 	        FROM (SELECT DISTINCT NAMA_PESERTA, PREMI FROM tl_individu_standard 
 			WHERE
@@ -569,6 +569,8 @@ class RdsTaspen extends CI_Model
 					ind.PREMI,
 					inv.STATUS,
 					ind.MEMBERNO,
+					IIF(DA.IDINSTANSI != '' AND DA.IDINSTANSI != 'Tidak ada di Antara', DA.IDINSTANSI,
+           M.MEMBERINSTANCYID) AS NIP,
 					p.IDCARDNUMBER,
 					CAST(M.TMT_MEMBER AS DATE) TMT_MEMBER,
 					CAST(M.POLICYENDDATE AS DATE) POLICYENDDATE,
@@ -587,10 +589,14 @@ class RdsTaspen extends CI_Model
 					   AND ind.TAHUN = inv.TEMP_TAHUN
 					   AND ind.BULAN = inv.TEMP_BULAN
 					   AND ind.ID_CHILD = inv.ID_CHILD
+					   AND ind.IDDIVISION = inv.IDDIVISION
+			           AND ind.IDSUB = inv.IDSUB
 			INNER JOIN MEMBER m
 				ON m.MEMBERNO = ind.MEMBERNO
 			INNER JOIN PERSONAL p
 				ON p.PERSONALID = m.PERSONALID
+			INNER JOIN DATA_ANTARA DA
+				ON DA.MEMBERNO = ind.MEMBERNO
 			WHERE
 				ind.POLICYNO = '$policyno'
 				AND ind.BULAN = '$bulan'
@@ -625,7 +631,7 @@ class RdsTaspen extends CI_Model
 		return $data->first_row();
 	}
 
-	public function count_individu_premi_pusat($id_division, $id_sub, $id_child, $policyno, $bulan, $tahun)
+	public function count_individu_premi_pusat($id_child, $policyno, $bulan, $tahun)
 	{
 		$data = $this->db->query(
 			"
@@ -659,6 +665,8 @@ class RdsTaspen extends CI_Model
 					ind.PREMI,
 					inv.STATUS,
 					ind.MEMBERNO,
+					IIF(DA.IDINSTANSI != '' AND DA.IDINSTANSI != 'Tidak ada di Antara', DA.IDINSTANSI,
+					M.MEMBERINSTANCYID) AS NIP,
 					p.IDCARDNUMBER,
 					CAST(M.TMT_MEMBER AS DATE) TMT_MEMBER,
 					CAST(M.POLICYENDDATE AS DATE) POLICYENDDATE,
@@ -681,6 +689,8 @@ class RdsTaspen extends CI_Model
 				ON m.MEMBERNO = ind.MEMBERNO
 			INNER JOIN PERSONAL p
 				ON p.PERSONALID = m.PERSONALID
+			INNER JOIN DATA_ANTARA DA
+				ON DA.MEMBERNO = ind.MEMBERNO
 			WHERE
 				ind.POLICYNO = '$policyno'
 				AND ind.BULAN = '$bulan'
