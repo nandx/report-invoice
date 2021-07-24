@@ -378,7 +378,7 @@ class RdsTaspen extends CI_Model
 				AND non.TAHUN = tl.TAHUN
 				AND non.ID_CHILD = tl.ID_CHILD
 				AND non.STATUS = 1) AS JMLPESERTA_PUSAT,
-			* from tl_invoice_standard where  ID_CHILD = 27 AND NOINVOICE IS NOT NULL AND CURRENCY IS NOT NULL AND PRODUCTNAME IS NOT NULL AND KOTA IS NOT NULL order by DUEDATE DESC");
+			* from tl_invoice_standard tl where  ID_CHILD = 27 AND NOINVOICE IS NOT NULL AND CURRENCY IS NOT NULL AND PRODUCTNAME IS NOT NULL AND KOTA IS NOT NULL order by DUEDATE DESC");
 		}
 		return $data->result();
 
