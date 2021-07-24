@@ -277,26 +277,13 @@
                 ?>
               </td>
               <td>
-                <?php
-                $individu = $this->db->query(
-                  "SELECT COUNT(DISTINCT NAMA_PESERTA) as COUNTED
-                			FROM tl_individu_standard 
-                			WHERE
-                				POLICYNO = '$dt->POLICYNO'
-                				AND BULAN = '$dt->TEMP_BULAN'
-                				AND TAHUN = '$dt->TEMP_TAHUN'
-                				AND ID_CHILD = '$dt->ID_CHILD'
-                        AND STATUS = 1"
-                )->first_row()->COUNTED;
-                if ($individu > 0 and $individu == $dt->JMLPST) { ?>
-                  <a target="_blank" class="btn btn-sm btn-primary" href="readpdfaspurjab/<?php echo $dt->ID . '/' . $dt->ID_CHILD . '/' . $dt->POLICYNO . '/' . $dt->TEMP_BULAN . '/' . $dt->TEMP_TAHUN . '/' . $dt->IDDIVISION . '/' . $dt->IDSUB; ?>">
-                    <h6 style="font-size:10px">invoice</h6>
-                  </a>
-                <?php } else { ?>
-                  <a target="_blank" class="btn btn-sm btn-primary disabled" href="readpdfaspurjab/<?php echo $dt->ID . '/' . $dt->ID_CHILD . '/' . $dt->POLICYNO . '/' . $dt->TEMP_BULAN . '/' . $dt->TEMP_TAHUN . '/' . $dt->IDDIVISION . '/' . $dt->IDSUB; ?>">
-                    <h6 style="font-size:10px">invoice</h6>
-                  </a>
-                <?php } ?>
+                  <?php 
+                    if( ($dt->JMLPESERTA_PERDIVISI == $dt->JMLPST) or ($dt->JMLPESERTA_PUSAT == $dt->JMLPST))
+                    { ?>
+                      <a target="_blank" class="btn btn-sm btn-primary" href="readpdfaspurjab/<?php echo $dt->ID . '/' . $dt->ID_CHILD . '/' . $dt->POLICYNO . '/' . $dt->TEMP_BULAN . '/' . $dt->TEMP_TAHUN . '/' . $dt->IDDIVISION . '/' . $dt->IDSUB; ?>" role="button">Invoice</a>
+                  <?php } else { ?>
+                    <a target="_blank" class="btn btn-sm btn-primary disabled" href="readpdfaspurjab/<?php echo $dt->ID . '/' . $dt->ID_CHILD . '/' . $dt->POLICYNO . '/' . $dt->TEMP_BULAN . '/' . $dt->TEMP_TAHUN . '/' . $dt->IDDIVISION . '/' . $dt->IDSUB; ?>" role="button">Invoice</a>
+                  <?php } ?>            
               </td>
             </tr>
         <?php
