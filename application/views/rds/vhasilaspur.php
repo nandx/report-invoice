@@ -28,70 +28,33 @@
       color: #000;
     }
 
-    strong {
-      font-weight: 600;
+
+    body {
+      font-size: 12px;
     }
 
-    a,
-    a:hover,
-    a:focus {
-      color: #9b59b6;
-      text-decoration: none;
-      transition: all .3s;
+    iv.dataTables_wrapper div.dataTables_filter {
+      width: 100%;
+      float: none;
+      text-align: center;
     }
 
-    h1,
-    h2 {
-      margin-top: 10px;
+    $('.col-sm-6').css('margin', 'auto').css('width', '60%') .dataTables_filter {
+      float: right !important;
+    }
 
-      <html><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible"content="IE=edge"><meta name="viewport"content="width=device-width, initial-scale=1"><title>ASPURJAB</title><link rel="stylesheet"href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css"crossorigin="anonymous"><link rel="stylesheet"href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"crossorigin="anonymous">< !-- Common Plugins --><link href="<?php echo base_url('assets/lib/bootstrap/css/bootstrap.min.css') ?>"rel="stylesheet">< !-- DataTables --><link href="<?php echo base_url('assets/lib/datatables/jquery.dataTables.min.css') ?>"rel="stylesheet"type="text/css"><link href="<?php echo base_url('assets/lib/datatables/responsive.bootstrap.min.css') ?>"rel="stylesheet"type="text/css"><link href="<?php echo base_url('assets/lib/datatables/buttons.dataTables.css') ?>"rel="stylesheet"type="text/css">< !-- Custom Css--><link href="<?php echo base_url('assets/css/style.css') ?> "rel="stylesheet"><style>.removeRow {
-        background-color: #77ACF1;
-        color: #000;
-      }
-
-      strong {
-        font-weight: 600;
-      }
-
-      a,
-      a:hover,
-      a:focus {
-        color: #9b59b6;
-        text-decoration: none;
-        transition: all .3s;
-      }
-
-      h1,
-      h2 {
-        margin-top: 10px;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 38px;
-        font-weight: 300;
-        color: #555;
-        line-height: 50px;
-      }
-
-      iv.dataTables_wrapper div.dataTables_filter {
-        width: 100%;
-        float: none;
-        text-align: center;
-      }
-
-      $('.col-sm-6').css('margin', 'auto').css('width', '60%') .dataTables_filter {
-        float: right !important;
-      }
-
-      #example_filter input {
-        border-radius: 5px;
-        float: left;
-        margin-right: 1010px;
-        height: 30px;
-        width: 190px;
-      }
-
-      .toggle-none {
+     #example_filter input {
+      border-radius: 5px;
+      float: left;
+      margin-right: 1010px;
+      height: 30px;
+      width: 190px;
+    }
+    
+    .toggle-none
+    {
         margin-top: -22px;
-      }
+    }
   </style>
 </head>
 
