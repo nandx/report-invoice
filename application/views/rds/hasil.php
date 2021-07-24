@@ -288,7 +288,7 @@
   </div>
   
    <footer class="footer">
-                <span>Copyright &copy; 2020 Taspenlife</span>
+                <span>Copyright &copy; 2021 Taspenlife</span>
             </footer>
 </section>
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
