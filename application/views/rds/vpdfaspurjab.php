@@ -301,8 +301,6 @@ function terbilang($nilai)
 
 
 
-		<h5 style="font-weight: bold;">PT ASURANSI JIWA TASPEN<h5>
-
 				<div><img alt="sign-bottom" src="<?php echo base_url(); ?>/img/sign-bottom.png" class="float-left" width="30%" ;></div>
 
 
