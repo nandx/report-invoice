@@ -258,8 +258,8 @@ class RdsTaspen extends CI_Model
 						SELECT COUNT(non.TAHUN) AS COUNTED
 						FROM tl_individu_standard non
 						WHERE non.POLICYNO = tl.POLICYNO
-						AND non.BULAN = tl.BULAN
-						AND non.TAHUN = tl.TAHUN
+						AND non.BULAN = tl.TEMP_BULAN
+						AND non.TAHUN = tl.TEMP_TAHUN
 						AND non.ID_CHILD = tl.ID_CHILD
 						AND non.STATUS = 1) AS JMLPESERTA_PUSAT,
 					tl.ID,
@@ -448,8 +448,8 @@ class RdsTaspen extends CI_Model
 				SELECT COUNT(non.TAHUN) AS COUNTED
 				FROM tl_individu_standard non
 				WHERE non.POLICYNO = tl.POLICYNO
-				AND non.BULAN = tl.BULAN
-				AND non.TAHUN = tl.TAHUN
+				AND non.BULAN = tl.TEMP_BULAN
+				AND non.TAHUN = tl.TEMP_TAHUN
 				AND non.ID_CHILD = tl.ID_CHILD
 				AND non.STATUS = 1) AS JMLPESERTA_PUSAT
 			,tl.* from tl_invoice_standard tl WHERE YEAR(DUEDATE) ='$year' AND ID_CHILD = 27 AND NOINVOICE IS NOT NULL and KOTA IS NOT NULL order by DUEDATE  DESC");
@@ -469,8 +469,8 @@ class RdsTaspen extends CI_Model
 				SELECT COUNT(non.TAHUN) AS COUNTED
 				FROM tl_individu_standard non
 				WHERE non.POLICYNO = tl.POLICYNO
-				AND non.BULAN = tl.BULAN
-				AND non.TAHUN = tl.TAHUN
+				AND non.BULAN = tl.TEMP_BULAN
+				AND non.TAHUN = tl.TEMP_TAHUN
 				AND non.ID_CHILD = tl.ID_CHILD
 				AND non.STATUS = 1) AS JMLPESERTA_PUSAT
 			,tl.* from tl_invoice_standard tl WHERE MONTH(DUEDATE) ='$cari' AND ID_CHILD = 27 AND NOINVOICE IS NOT NULL and KOTA IS NOT NULL order by DUEDATE  DESC");
@@ -490,8 +490,8 @@ class RdsTaspen extends CI_Model
 				SELECT COUNT(non.TAHUN) AS COUNTED
 				FROM tl_individu_standard non
 				WHERE non.POLICYNO = tl.POLICYNO
-				AND non.BULAN = tl.BULAN
-				AND non.TAHUN = tl.TAHUN
+				AND non.BULAN = tl.TEMP_BULAN
+				AND non.TAHUN = tl.TEMP_TAHUN
 				AND non.ID_CHILD = tl.ID_CHILD
 				AND non.STATUS = 1) AS JMLPESERTA_PUSAT
 			,tl.* from tl_invoice_standard tl WHERE MONTH(DUEDATE) = '$cari' AND YEAR(DUEDATE) = '$year' AND ID_CHILD = 27 AND NOINVOICE IS NOT NULL and KOTA IS NOT NULL order by DUEDATE  DESC");
@@ -523,8 +523,8 @@ class RdsTaspen extends CI_Model
 				SELECT COUNT(non.TAHUN) AS COUNTED
 				FROM tl_individu_standard non
 				WHERE non.POLICYNO = tl.POLICYNO
-				AND non.BULAN = tl.BULAN
-				AND non.TAHUN = tl.TAHUN
+				AND non.BULAN = tl.TEMP_BULAN
+				AND non.TAHUN = tl.TEMP_TAHUN
 				AND non.ID_CHILD = tl.ID_CHILD
 				AND non.STATUS = 1) AS JMLPESERTA_PUSAT,
 			* from tl_invoice_standard tl where  ID_CHILD = 27 AND NOINVOICE IS NOT NULL AND CURRENCY IS NOT NULL AND PRODUCTNAME IS NOT NULL AND KOTA IS NOT NULL order by DUEDATE DESC");
@@ -556,8 +556,8 @@ class RdsTaspen extends CI_Model
 			SELECT COUNT(non.TAHUN) AS COUNTED
 			FROM tl_individu_standard non
 			WHERE non.POLICYNO = tl.POLICYNO
-			AND non.BULAN = tl.BULAN
-			AND non.TAHUN = tl.TAHUN
+			AND non.BULAN = tl.TEMP_BULAN
+			AND non.TAHUN = tl.TEMP_TAHUN
 			AND non.ID_CHILD = tl.ID_CHILD
 			AND non.STATUS = 1) AS JMLPESERTA_PUSAT,
 			 * FROM tl_invoice_standard where ID_CHILD = 27 AND CURRENCY IS NOT NULL AND PRODUCTNAME IS NOT NULL AND KOTA IS NOT NULL order by DUEDATE DESC");
