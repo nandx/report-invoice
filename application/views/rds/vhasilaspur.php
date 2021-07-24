@@ -283,8 +283,8 @@
                 			FROM tl_individu_standard 
                 			WHERE
                 				POLICYNO = '$dt->POLICYNO'
-                				AND BULAN = '$dt->BULAN'
-                				AND TAHUN = '$dt->TAHUN'
+                				AND BULAN = '$dt->TEMP_BULAN'
+                				AND TAHUN = '$dt->TEMP_TAHUN'
                 				AND ID_CHILD = '$dt->ID_CHILD'"
                 )->first_row()->COUNTED;
                 if ($individu > 0 and $individu == $dt->JMLPST) { ?>
