@@ -872,7 +872,7 @@ class RdsTaspen extends CI_Model
 					inv.NOINVOICE,
 					ind.NOTAS,
 					ind.NAMA_PESERTA,
-					ind.PREMI,
+					M.TOTALPREMIUM,
 					inv.STATUS,
 					ind.MEMBERNO,
 					IIF(DA.IDINSTANSI != '' AND DA.IDINSTANSI != 'Tidak ada di Antara', DA.IDINSTANSI,
