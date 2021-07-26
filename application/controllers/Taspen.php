@@ -221,7 +221,7 @@ class Taspen extends CI_Controller
 				$sheet->setCellValue('P' . $r, $row->BASICSALARY);
 				$sheet->setCellValue('Q' . $r, $row->PASANGAN);
 				$sheet->setCellValue('R' . $r, $row->ANAK);
-				$sheet->setCellValue('S' . $r, $row->TOTALPREMIUM);
+				$sheet->setCellValue('S' . $r, $row->PREMI);
 				$sheet->setCellValue('T' . $r, $row->SUMASSURED);
 				$sheet->setCellValue('U' . $r, $row->PREMIUMRATE);
 				$sheet->setCellValue('V' . $r, $row->UPM);
