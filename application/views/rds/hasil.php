@@ -269,9 +269,9 @@
                   <?php 
                     if( ($dt->JMLPESERTA_PERDIVISI == $dt->JMLPST) or ($dt->JMLPESERTA_PUSAT == $dt->JMLPST))
                     { ?>
-                      <a target="_blank" class="btn btn-sm btn-primary" href="excelstandard/<?php echo $dt->IDDIVISION; ?>/<?php echo $dt->IDSUB; ?>/<?php echo $dt->ID_CHILD; ?>/<?php echo $dt->POLICYNO; ?>/<?php echo $dt->TEMP_BULAN; ?>/<?php echo $dt->TEMP_TAHUN; ?>" role="button">Lampiran</a>
+                      <a target="_blank" class="btn btn-sm btn-primary" href="excelstandard/<?php echo $dt->ID_CHILD; ?>/<?php echo $dt->POLICYNO; ?>/<?php echo $dt->TEMP_BULAN; ?>/<?php echo $dt->TEMP_TAHUN; ?>/<?php echo $dt->IDDIVISION; ?>/<?php echo $dt->IDSUB; ?>" role="button">Lampiran</a>
                   <?php } else { ?>
-                    <a target="_blank" class="btn btn-sm btn-primary disabled" href="excelstandard/<?php echo $dt->IDDIVISION; ?>/<?php echo $dt->IDSUB; ?>/<?php echo $dt->ID_CHILD; ?>/<?php echo $dt->POLICYNO; ?>/<?php echo $dt->TEMP_BULAN; ?>/<?php echo $dt->TEMP_TAHUN; ?>" role="button">Lampiran</a>
+                    <a target="_blank" class="btn btn-sm btn-primary disabled" href="excelstandard/<?php echo $dt->ID_CHILD; ?>/<?php echo $dt->POLICYNO; ?>/<?php echo $dt->TEMP_BULAN; ?>/<?php echo $dt->TEMP_TAHUN; ?>/<?php echo $dt->IDDIVISION; ?>/<?php echo $dt->IDSUB; ?>" role="button">Lampiran</a>
                   <?php } ?>            
                 </td>
 

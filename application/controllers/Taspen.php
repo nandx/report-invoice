@@ -160,7 +160,7 @@ class Taspen extends CI_Controller
 
 
 	// export excel invoice standard
-	public function excelstandard($id_division = null, $id_sub = null, $id_child, $policyno, $bulan, $tahun)
+	public function excelstandard($id_child, $policyno, $bulan, $tahun, $id_division = null, $id_sub = null)
 	{
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet->getActiveSheet();
