@@ -211,8 +211,6 @@ class RdsTaspen extends CI_Model
 			WHERE tl.ID_CHILD != 27
 			AND MONTH(DUEDATE) = '$cari'
 			AND YEAR(DUEDATE) = '$year'
-			AND tl.IDDIVISION IS NOT NULL
-			AND tl.IDSUB IS NOT NULL
 			ORDER BY tl.DUEDATE DESC
 		");
 		}
@@ -294,9 +292,6 @@ class RdsTaspen extends CI_Model
 					tl.REV
 				FROM tl_invoice_standard tl
 				WHERE tl.ID_CHILD != 27
-				AND tl.IDDIVISION IS NOT NULL
-				AND tl.IDSUB IS NOT NULL
-				AND tl.IDSUB > 0
 				ORDER BY tl.DUEDATE DESC
 			");
 
