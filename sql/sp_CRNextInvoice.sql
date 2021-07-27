@@ -181,9 +181,9 @@ WHERE NEXT_INVOICE.PAYMENT_VALIDATOR = 0
 
     UPDATE tl_invoice_standard
     SET NOINVOICE = CASE
-                        WHEN LEN(BULAN) < 2 THEN CONCAT(@NOURUT + ID, '/', PRODUCTCODE, '/', CONCAT(0, BULAN), '/',
+                        WHEN LEN(BULAN) < 2 THEN CONCAT(@NOURUT + ID, '/', PRODUCTCODE, '/', CONCAT(0, BULAN+1), '/',
                                                         TAHUN)
-                        ELSE CONCAT(@NOURUT + ID, '/', PRODUCTCODE, '/', BULAN, '/', TAHUN)
+                        ELSE CONCAT(@NOURUT + ID, '/', PRODUCTCODE, '/', BULAN+1, '/', TAHUN)
         END
     WHERE NOINVOICE IS NULL;
 END;

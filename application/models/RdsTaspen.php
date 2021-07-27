@@ -762,8 +762,8 @@ class RdsTaspen extends CI_Model
 
 		$data = $this->db->query(
 			"
-			SELECT DISTINCT ind.TAHUN,
-					ind.BULAN,
+			SELECT DISTINCT inv.TAHUN,
+					inv.BULAN,
 					inv.PRODUCTNAME,
 					inv.NMDIVISION,
 					0 as SAP_NO,
@@ -858,8 +858,8 @@ class RdsTaspen extends CI_Model
 	{
 		$data = $this->db->query(
 			"
-			SELECT DISTINCT ind.TAHUN,
-					ind.BULAN,
+			SELECT DISTINCT inv.TAHUN,
+					inv.BULAN,
 					inv.PRODUCTNAME,
 					inv.NMDIVISION,
 					0 as SAP_NO,
