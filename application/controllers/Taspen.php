@@ -78,15 +78,15 @@ class Taspen extends CI_Controller
 
 	public function readpdf($id)
 	{
-		$data['upnonaspdf'] = $this->RdsTaspen->updatenonasporcetakpdf($id);
-		$data['cari'] = $this->RdsTaspen->querywhere($id);
+		$this->RdsTaspen->updatenonasporcetakpdf($id);
 		$data['jml'] = $this->RdsTaspen->sumjmlpremi($id);
 		$data['listparams'] = $this->RdsTaspen->listparams(); // add for params values
+		$data['cari'] = $this->RdsTaspen->querywhere($id);
 
 		$mpdf = new \Mpdf\Mpdf();
 		$mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
 		$mpdf->SetTitle('My Title');
-		$html = $this->load->view('rds/v_mpdf', $data, true);
+		$html = $this->load->view('rds/v_mpdf', $data, true, 'refresh');
 		$mpdf->WriteHTML($html);
 		$mpdf->Output($id, 'I');
 		//$mpdf->Output(); // opens in browser without save otomatic
@@ -130,9 +130,7 @@ class Taspen extends CI_Controller
 		// $data['premi'] = $this->RdsTaspen->premias($id, $bulan, $tahun);
 		// $data['whereloop'] = $this->RdsTaspen->querywhereasloop($id, $bulan,$tahun);
 		//$data['terbias'] = $this->RdsTaspen->terbilongaspur($id, $bulan, $tahun);
-		$data['invoice'] = $this->RdsTaspen->get_aspurjab_invoice($id, $id_child, $policyno, $bulan, $tahun);
 		$data['listparams'] = $this->RdsTaspen->listparams();
-
 		if( is_null($id_division) or is_null($id_sub))
 		{
 			$data['individu'] = $this->RdsTaspen->get_individu_premi_pusat($id_child, $policyno, $bulan, $tahun);
@@ -140,6 +138,7 @@ class Taspen extends CI_Controller
 			$data['individu'] = $this->RdsTaspen->get_individu_premi_standard($id_division, $id_sub, $id_child, $policyno, $bulan, $tahun);
 		}
 
+		$data['invoice'] = $this->RdsTaspen->get_aspurjab_invoice($id, $id_child, $policyno, $bulan, $tahun);
 		$mpdf = new \Mpdf\Mpdf();
 		$mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
 		$mpdf->SetTitle('My Title');
