@@ -355,18 +355,13 @@ class RdsTaspen extends CI_Model
 		$data = $this->db->query("SELECT sum(jmlpremi) as  jml from tl_invoice_standard where id = '$id' AND ID_CHILD !=27");
 		return $data->result();
 	}
-	public function updatenonasporcetakpdf($id)
+
+	public function updateDueDateNonAspor($id)
 	{
 		$status = $this->db->query("SELECT STATUS, DUEDATE FROM tl_invoice_standard where id='$id'")->first_row();
 		$this->db->set('PRINTDATE', 'GETDATE()', FALSE);
+
 		if ($status->STATUS == 0) {
-			$this->db->set('DUEDATE', "CASE 
-			WHEN(DAY(DUEDATE) > 28) 
-				THEN DATEADD(month, 1, DATEADD(day, 3, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), DAY(DUEDATE) - 3)))
-			ELSE DATEADD(month, 1, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), DAY(DUEDATE)))
-			END", FALSE);
-
-
 			$this->db->set('BULAN', "CASE
 			WHEN(LEN(MONTH(GETDATE()) + 1) < 2)
 				THEN CONCAT(0,MONTH(GETDATE())+1)
@@ -374,6 +369,27 @@ class RdsTaspen extends CI_Model
 			END", FALSE);
 
 			$this->db->set('TAHUN', "YEAR(GETDATE())", FALSE);
+
+			$this->db->set('DUEDATE', "CASE 
+			WHEN(DAY(DUEDATE) > 28) 
+				THEN DATEADD(month, 1, DATEADD(day, 3, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), DAY(DUEDATE) - 3)))
+			ELSE DATEADD(month, 1, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), DAY(DUEDATE)))
+			END", FALSE);
+		}
+		$this->db->where('ID', $id);
+		$updated = $this->db->update('tl_invoice_standard');
+		return $updated ? true : false;
+	}
+	
+	public function updateNoInvoiceNonAspor($id)
+	{
+		$status = $this->db->query("SELECT STATUS, DUEDATE FROM tl_invoice_standard where id='$id'")->first_row();
+		$nourut = $this->db->query("SELECT TOP 1 NOINVOICE FROM tbl_params")->first_row();
+
+		$this->db->set('PRINTDATE', 'GETDATE()', FALSE);
+		if ($status->STATUS == 0) {
+			$this->db->set('NOINVOICE', "CONCAT(ID + $nourut->NOINVOICE, '/', PRODUCTCODE, '/',
+			IIF(LEN(BULAN) < 2, CONCAT(0, BULAN), BULAN), '/', TAHUN)", FALSE);
 		}
 		$this->db->where('ID', $id);
 		$updated = $this->db->update('tl_invoice_standard');
@@ -718,14 +734,10 @@ class RdsTaspen extends CI_Model
 	{
 		$status = $this->db->query("SELECT STATUS FROM tl_invoice_standard where id='$id'")->first_row();
 
+		$nourut = $this->db->query("SELECT TOP 1 NOINVOICE FROM tbl_params")->first_row();
+
 		$this->db->set('PRINTDATE', 'GETDATE()', FALSE);
 		if ($status->STATUS == 0) {
-			$this->db->set('DUEDATE', "CASE 
-			WHEN(DAY(DUEDATE) > 28) 
-				THEN DATEADD(month, 1, DATEADD(day, 3, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), DAY(DUEDATE) - 3)))
-			ELSE DATEADD(month, 1, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), DAY(DUEDATE)))
-			END", FALSE);
-
 			$this->db->set('BULAN', "CASE
 			WHEN(LEN(MONTH(GETDATE()) + 1) < 2)
 				THEN CONCAT(0,MONTH(GETDATE())+1)
@@ -733,6 +745,15 @@ class RdsTaspen extends CI_Model
 			END", FALSE);
 
 			$this->db->set('TAHUN', "YEAR(GETDATE())", FALSE);
+
+			$this->db->set('NOINVOICE', "CONCAT(ID + $nourut->NOINVOICE, '/', PRODUCTCODE, '/',
+			IIF(LEN(BULAN) < 2, CONCAT(0, BULAN), BULAN), '/', TAHUN)", FALSE);
+			
+			$this->db->set('DUEDATE', "CASE 
+			WHEN(DAY(DUEDATE) > 28) 
+				THEN DATEADD(month, 1, DATEADD(day, 3, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), DAY(DUEDATE) - 3)))
+			ELSE DATEADD(month, 1, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), DAY(DUEDATE)))
+			END", FALSE);
 		}
 		$this->db->where('ID', $id);
 		$updated = $this->db->update('tl_invoice_standard');
@@ -762,8 +783,8 @@ class RdsTaspen extends CI_Model
 
 		$data = $this->db->query(
 			"
-			SELECT DISTINCT ind.TAHUN,
-					ind.BULAN,
+			SELECT DISTINCT inv.TAHUN,
+					inv.BULAN,
 					inv.PRODUCTNAME,
 					inv.NMDIVISION,
 					0 as SAP_NO,
@@ -858,8 +879,8 @@ class RdsTaspen extends CI_Model
 	{
 		$data = $this->db->query(
 			"
-			SELECT DISTINCT ind.TAHUN,
-					ind.BULAN,
+			SELECT DISTINCT inv.TAHUN,
+					inv.BULAN,
 					inv.PRODUCTNAME,
 					inv.NMDIVISION,
 					0 as SAP_NO,
