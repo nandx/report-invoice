@@ -78,7 +78,8 @@ class Taspen extends CI_Controller
 
 	public function readpdf($id)
 	{
-		$this->RdsTaspen->updatenonasporcetakpdf($id);
+		$this->RdsTaspen->updateDueDateNonAspor($id);
+		$this->RdsTaspen->updateNoInvoiceNonAspor($id);
 		$data['jml'] = $this->RdsTaspen->sumjmlpremi($id);
 		$data['listparams'] = $this->RdsTaspen->listparams(); // add for params values
 		$data['cari'] = $this->RdsTaspen->querywhere($id);
