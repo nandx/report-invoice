@@ -4,12 +4,12 @@ ALTER
 AS
 BEGIN
 
-    DECLARE @THN INT , @BLN INT , @NOURUT INT, @GENERATEDATE DATE;
+    DECLARE @THN INT, @BLN INT, @NOURUT INT, @GENERATEDATE DATE;
 
     SET @GENERATEDATE = GETDATE();
     --SET @GENERATEDATE = DATEFROMPARTS(2021, 6, 1);
     SET @THN = YEAR(@GENERATEDATE);
-    SET @BLN = MONTH(@GENERATEDATE);
+    SET @BLN = MONTH(@GENERATEDATE) + 1;
     SET @NOURUT = (SELECT noinvoice FROM tbl_params);
 
     INSERT INTO tl_individu_standard (iddivision, idsub, id_child, tahun, bulan, policyno, notas, memberno,
@@ -26,10 +26,10 @@ BEGIN
                     PREMI
     FROM (
              SELECT DISTINCT CASE
-                                 WHEN ((month(@GENERATEDATE) - MONTH(SPABEGDATE)) > 0)
+                                 WHEN ((@BLN - MONTH(SPABEGDATE)) > 0)
                                      THEN
-                                     ((MONTH(@GENERATEDATE) - MONTH(SPABEGDATE)) % PAYMODE.MODE)
-                                 ELSE ((MONTH(@GENERATEDATE) + 12 - MONTH(SPABEGDATE)) % PAYMODE.MODE)
+                                     ((@BLN - MONTH(SPABEGDATE)) % PAYMODE.MODE)
+                                 ELSE ((@BLN + 12 - MONTH(SPABEGDATE)) % PAYMODE.MODE)
                                  END                         AS PAYMENT_VALIDATOR,
                              @THN                            AS TAHUN,
                              @BLN                            AS BULAN,
@@ -92,98 +92,97 @@ BEGIN
                                      bankname,
                                      accountname,
                                      accountnumber)
-SELECT ID_CHILD,
-       IDDIVISION,
-       IDSUB,
-       SPANO,
-       CREATEDATE,
-       DUEDATE,
-       PAYMENTDATE,
-       PRINTDATE,
-       TAHUN,
-       TAHUN,
-       BULAN,
-       BULAN,
-       PARTNERNAME,
-       NMDIVISION,
-       NMSUB,
-       ALAMAT,
-       KOTA,
-       NOINVOICE,
-       POLICYNO,
-       JMLPST,
-       JMLPREMI,
-       TERBILANG,
-       CURRENCY,
-       PRODUCTCODE,
-       PRODUCTNAME,
-       BANKNAME,
-       ACCOUNTNAME,
-       ACCOUNTNUMBER
-FROM (
-         SELECT CASE
-                    WHEN ((month(@GENERATEDATE) - MONTH(SPABEGDATE)) > 0)
-                        THEN
-                        ((MONTH(@GENERATEDATE) - MONTH(SPABEGDATE)) % PAYMODE.MODE)
-                    ELSE ((MONTH(@GENERATEDATE) + 12 - MONTH(SPABEGDATE)) % PAYMODE.MODE)
-                    END                            AS PAYMENT_VALIDATOR,
-                CASE
-                    WHEN (DAY(PM.SPABEGDATE) > 28) THEN
-                        DATEADD(month, 1,
-                                DATEADD(day, 3, DATEFROMPARTS(@THN, @BLN, DAY(PM.SPABEGDATE) - 3)))
-                    ELSE DATEADD(month, 1, DATEFROMPARTS(@THN, @BLN, DAY(PM.SPABEGDATE)))
-                    END                            AS DUEDATE,
-                GETDATE()                          AS CREATEDATE,
-                @THN                               AS TAHUN,
-                @BLN                               AS BULAN,
-                PM.SPANO,
-                NULL                               AS PAYMENTDATE,
-                NULL                               AS PRINTDATE,
-                PTX.ID_CHILD,
-                count(M.MEMBERNO)                  AS JMLPST,
-                SUM(M.TOTALPREMIUM)                AS JMLPREMI,
-                PAYMODE.MODE,
-                dbo.terbilang(SUM(M.TOTALPREMIUM)) as terbilang,
-                PART.PARTNERNAME                   AS PARTNERNAME,
-                GU.NMDIVISION                      AS NMDIVISION,
-                GU.NMSUB                           AS NMSUB,
-                GU.ALAMAT,
-                GU.KOTA                            AS KOTA,
-                PM.POLICYNO,
-                NULL                               AS NOINVOICE,
-                GU.ID                              AS IDSUB,
-                GU.IDDIVISION                      AS IDDIVISION,
-                PG.PRODUCTNAME,
-                PM.CURRENCY,
-                PG.PRODUCTCODE,
-                BM.BANKNAME,
-                BM.ACCOUNTNAME,
-                BM.ACCOUNTNUMBER
-         FROM MEMBER M
-                  INNER JOIN POLICYMASTER PM
-                             ON PM.SPANO = M.SPANO
-                  INNER JOIN PROPOSITION_TRX PTX ON PTX.ID_PARENT = PM.IDPACKET
-                  INNER JOIN FORMULAPREMI FP ON FP.SPANO = M.SPANO and FP.ID_CHILD = PTX.ID_CHILD
-                  INNER JOIN PARTNER PART ON PART.ID = FP.IDPARTNER
-                  INNER JOIN GROUPUNIT GU ON GU.ID = M.IDSUB
-                  INNER JOIN PAYMENTMODE PAYMODE ON PAYMODE.IDPAYMENTMODE = PM.PAYMENTMETHOD
-                  INNER JOIN PRODUCTGROUPS PG ON PG.IDPRODUCT = PTX.ID_CHILD
-                  INNER JOIN BANKMASTER BM ON BM.BANKID = PM.BANKID
-         WHERE M.ACTIVEF = 4
-           AND PAYMODE.MODE <> 0
-         GROUP BY PM.SPABEGDATE, PAYMODE.MODE, PM.SPANO, PTX.ID_CHILD,
-                  PART.PARTNERNAME, GU.NMDIVISION, GU.NMSUB, GU.ALAMAT,
-                  GU.KOTA, PM.POLICYNO, GU.ID, GU.IDDIVISION,
-                  PG.PRODUCTNAME, PM.CURRENCY, PG.PRODUCTCODE, BM.BANKNAME,
-                  BM.ACCOUNTNAME, BM.ACCOUNTNUMBER) NEXT_INVOICE
-WHERE NEXT_INVOICE.PAYMENT_VALIDATOR = 0
-  AND JMLPREMI > 0;
+    SELECT ID_CHILD,
+           IDDIVISION,
+           IDSUB,
+           SPANO,
+           CREATEDATE,
+           DUEDATE,
+           PAYMENTDATE,
+           PRINTDATE,
+           TAHUN,
+           TAHUN,
+           BULAN,
+           BULAN,
+           PARTNERNAME,
+           NMDIVISION,
+           NMSUB,
+           ALAMAT,
+           KOTA,
+           NOINVOICE,
+           POLICYNO,
+           JMLPST,
+           JMLPREMI,
+           TERBILANG,
+           CURRENCY,
+           PRODUCTCODE,
+           PRODUCTNAME,
+           BANKNAME,
+           ACCOUNTNAME,
+           ACCOUNTNUMBER
+    FROM (
+             SELECT CASE
+                        WHEN ((month(@GENERATEDATE) - MONTH(SPABEGDATE)) > 0)
+                            THEN
+                            ((MONTH(@GENERATEDATE) - MONTH(SPABEGDATE)) % PAYMODE.MODE)
+                        ELSE ((MONTH(@GENERATEDATE) + 12 - MONTH(SPABEGDATE)) % PAYMODE.MODE)
+                        END                            AS PAYMENT_VALIDATOR,
+                    CASE
+                        WHEN (DAY(PM.SPABEGDATE) > 28) THEN
+                            (DATEADD(day, 3, DATEFROMPARTS(@THN, @BLN, DAY(PM.SPABEGDATE) - 3)))
+                        ELSE (DATEFROMPARTS(@THN, @BLN, DAY(PM.SPABEGDATE)))
+                        END                            AS DUEDATE,
+                    GETDATE()                          AS CREATEDATE,
+                    @THN                               AS TAHUN,
+                    @BLN                               AS BULAN,
+                    PM.SPANO,
+                    NULL                               AS PAYMENTDATE,
+                    NULL                               AS PRINTDATE,
+                    PTX.ID_CHILD,
+                    count(M.MEMBERNO)                  AS JMLPST,
+                    SUM(M.TOTALPREMIUM)                AS JMLPREMI,
+                    PAYMODE.MODE,
+                    dbo.terbilang(SUM(M.TOTALPREMIUM)) as terbilang,
+                    PART.PARTNERNAME                   AS PARTNERNAME,
+                    GU.NMDIVISION                      AS NMDIVISION,
+                    GU.NMSUB                           AS NMSUB,
+                    GU.ALAMAT,
+                    GU.KOTA                            AS KOTA,
+                    PM.POLICYNO,
+                    NULL                               AS NOINVOICE,
+                    GU.ID                              AS IDSUB,
+                    GU.IDDIVISION                      AS IDDIVISION,
+                    PG.PRODUCTNAME,
+                    PM.CURRENCY,
+                    PG.PRODUCTCODE,
+                    BM.BANKNAME,
+                    BM.ACCOUNTNAME,
+                    BM.ACCOUNTNUMBER
+             FROM MEMBER M
+                      INNER JOIN POLICYMASTER PM
+                                 ON PM.SPANO = M.SPANO
+                      INNER JOIN PROPOSITION_TRX PTX ON PTX.ID_PARENT = PM.IDPACKET
+                      INNER JOIN FORMULAPREMI FP ON FP.SPANO = M.SPANO and FP.ID_CHILD = PTX.ID_CHILD
+                      INNER JOIN PARTNER PART ON PART.ID = FP.IDPARTNER
+                      INNER JOIN GROUPUNIT GU ON GU.ID = M.IDSUB
+                      INNER JOIN PAYMENTMODE PAYMODE ON PAYMODE.IDPAYMENTMODE = PM.PAYMENTMETHOD
+                      INNER JOIN PRODUCTGROUPS PG ON PG.IDPRODUCT = PTX.ID_CHILD
+                      INNER JOIN BANKMASTER BM ON BM.BANKID = PM.BANKID
+             WHERE M.ACTIVEF = 4
+               AND PAYMODE.MODE <> 0
+             GROUP BY PM.SPABEGDATE, PAYMODE.MODE, PM.SPANO, PTX.ID_CHILD,
+                      PART.PARTNERNAME, GU.NMDIVISION, GU.NMSUB, GU.ALAMAT,
+                      GU.KOTA, PM.POLICYNO, GU.ID, GU.IDDIVISION,
+                      PG.PRODUCTNAME, PM.CURRENCY, PG.PRODUCTCODE, BM.BANKNAME,
+                      BM.ACCOUNTNAME, BM.ACCOUNTNUMBER) NEXT_INVOICE
+    WHERE NEXT_INVOICE.PAYMENT_VALIDATOR = 0
+      AND JMLPREMI > 0;
 
     UPDATE tl_invoice_standard
     SET NOINVOICE = CASE
-                        WHEN LEN(BULAN) < 2 THEN CONCAT(@NOURUT + ID, '/', PRODUCTCODE, '/', CONCAT(0, BULAN+1), '/',
+                        WHEN LEN(BULAN) < 2 THEN CONCAT(@NOURUT + ID, '/', PRODUCTCODE, '/', CONCAT(0, BULAN), '/',
                                                         TAHUN)
-                        ELSE CONCAT(@NOURUT + ID, '/', PRODUCTCODE, '/', BULAN+1, '/', TAHUN)
+                        ELSE CONCAT(@NOURUT + ID, '/', PRODUCTCODE, '/', BULAN, '/', TAHUN)
         END
     WHERE NOINVOICE IS NULL;
 END;
