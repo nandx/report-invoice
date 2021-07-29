@@ -36,7 +36,9 @@ BEGIN
             IF @Action = 'D'
                 BEGIN
                     UPDATE t
-                    SET t.STATUS = (CASE WHEN m.ACTIVEF = 4 THEN 1 ELSE 0 END)
+                    SET t.STATUS = (CASE WHEN m.ACTIVEF = 4 THEN 1 ELSE 0 END),
+                    t.IDSUB = m.IDSUB,
+                    t.IDDIVISION = m.IDDIVISION
                     FROM dbo.tl_individu_standard t
                              INNER JOIN DELETED d on t.MEMBERNO = d.MEMBERNO
                              INNER JOIN dbo.MEMBER m ON d.MEMBERNO = m.MEMBERNO
@@ -47,7 +49,9 @@ BEGIN
                     IF @Action = 'U'
                         BEGIN
                             UPDATE t
-                            SET t.status = (CASE WHEN m.ACTIVEF = 4 THEN 1 ELSE 0 END)
+                            SET t.status = (CASE WHEN m.ACTIVEF = 4 THEN 1 ELSE 0 END),
+                            t.IDSUB = m.IDSUB,
+                            t.IDDIVISION = m.IDDIVISION
                             FROM dbo.tl_individu_standard t
                                      INNER JOIN INSERTED i on t.memberno = i.memberno
                                      INNER JOIN DELETED d on i.memberno = d.memberno
@@ -56,7 +60,9 @@ BEGIN
                     ELSE
                         BEGIN
                             UPDATE t
-                            SET status = (CASE WHEN m.ACTIVEF = 4 THEN 1 ELSE 0 END)
+                            SET status = (CASE WHEN m.ACTIVEF = 4 THEN 1 ELSE 0 END),
+                            t.IDSUB = m.IDSUB,
+                             t.IDDIVISION = m.IDDIVISION
                             FROM dbo.tl_individu_standard t
                                      INNER JOIN INSERTED i on t.memberno = i.memberno
                                      INNER JOIN dbo.MEMBER m ON i.memberno = m.memberno
@@ -65,4 +71,3 @@ BEGIN
         END
 END
 go
-
