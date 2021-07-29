@@ -43,25 +43,25 @@ class RdsTaspen extends CI_Model
 		$cari = $this->input->GET('cari', TRUE);
 		$year = $this->input->GET('year', TRUE);
 
-		if ($cari == "all") {
+		if ($cari == "all" && $year != "all") {
 			$data = $this->db->query("
 			SELECT *
 			FROM VW_RPTINV_NONASPURJAB tl
-			WHERE YEAR(DUEDATE) = '$year'
+			WHERE YEAR(tl.DUEDATE) = '$year'
 			ORDER BY tl.DUEDATE DESC
 		");
-		} elseif ($year == 'all') {
+		} elseif ($year == 'all' && $cari != "all") {
 			$data = $this->db->query("
 			SELECT  *
 			FROM VW_RPTINV_NONASPURJAB tl
-			WHERE MONTH(DUEDATE) = '$cari'
+			WHERE MONTH(tl.DUEDATE) = '$cari'
 			ORDER BY tl.DUEDATE DESC
 		");
 		} else {
 			$data = $this->db->query("
 			SELECT  *
 			FROM VW_RPTINV_NONASPURJAB tl
-			WHERE MONTH(DUEDATE) = '$cari'
+			WHERE MONTH(tl.DUEDATE) = '$cari'
 			AND YEAR(DUEDATE) = '$year'
 			ORDER BY tl.DUEDATE DESC
 		");
@@ -139,7 +139,7 @@ class RdsTaspen extends CI_Model
 	//Non Aspurjab ID_CHILD != 27
 	public function allmlookup()
 	{
-		$data = $this->db->query("SELECT * from tl_invoice_standard where ID_CHILD != 27 AND IDDIVISION IS NOT NULL  AND IDSUB > 0 order by DUEDATE DESC");
+		$data = $this->db->query("SELECT * from VW_RPTINV_NONASPURJAB where ID_CHILD != 27 AND IDDIVISION IS NOT NULL  AND IDSUB > 0 order by DUEDATE DESC");
 		return $data->result();
 	}
 
