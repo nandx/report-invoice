@@ -75,7 +75,7 @@
           <ul class="list-inline top-right-nav">
 
             <li class="dropdown avtar-dropdown">
-              <a data-toggle="dropdown" href="<?php echo base_url('taspen/lookup?cari=all&year=all'); ?>">
+              <a data-toggle="dropdown" href="<?php echo base_url('taspen/lookup?cari=all&year=2021'); ?>">
                 Non Aspurjab
               </a>
             </li>
@@ -278,6 +278,7 @@
               </td>
               <td>
                   <?php 
+                    echo $dt->JMLPESERTA_PERDIVISI . ' ' . $dt->JMLPESERTA_PUSAT;
                     if( ($dt->JMLPESERTA_PERDIVISI == $dt->JMLPST) or ($dt->JMLPESERTA_PUSAT == $dt->JMLPST))
                     { ?>
                       <a target="_blank" class="btn btn-sm btn-primary" href="readpdfaspurjab/<?php echo $dt->ID . '/' . $dt->ID_CHILD . '/' . $dt->POLICYNO . '/' . $dt->TEMP_BULAN . '/' . $dt->TEMP_TAHUN . '/' . $dt->IDDIVISION . '/' . $dt->IDSUB; ?>" role="button">Invoice</a>
