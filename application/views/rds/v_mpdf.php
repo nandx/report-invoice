@@ -142,7 +142,7 @@ return $bulan;
 				<td>: <?php echo $dt->NOINVOICE;
 
 						if ($dt->REV != '0') {
-							echo " - Rev " . $dt->REV;
+							echo " - R " . $dt->REV;
 						}
 						?>
 				</td>
